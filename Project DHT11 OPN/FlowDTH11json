@@ -1,0 +1,181 @@
+[
+    {
+        "id": "8062c96f6804a98b",
+        "type": "tab",
+        "label": "Grafana",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "08cfcec746b50f57",
+        "type": "mqtt in",
+        "z": "8062c96f6804a98b",
+        "name": "",
+        "topic": "pruebaie/temp",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "ca462e86c2aa4086",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 100,
+        "wires": [
+            [
+                "9a5f5a47dfdd7ce9"
+            ]
+        ]
+    },
+    {
+        "id": "62af12738f285def",
+        "type": "mqtt in",
+        "z": "8062c96f6804a98b",
+        "name": "",
+        "topic": "pruebaie/hum",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "ca462e86c2aa4086",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 140,
+        "y": 160,
+        "wires": [
+            [
+                "6706d1bec81591df"
+            ]
+        ]
+    },
+    {
+        "id": "9a5f5a47dfdd7ce9",
+        "type": "function",
+        "z": "8062c96f6804a98b",
+        "name": "",
+        "func": "global.set (\"temp\", parseFloat(msg.payload));\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6706d1bec81591df",
+        "type": "function",
+        "z": "8062c96f6804a98b",
+        "name": "",
+        "func": "global.set (\"hum\", parseInt(msg.payload));\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f279333ed48c9eb8",
+        "type": "inject",
+        "z": "8062c96f6804a98b",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 280,
+        "wires": [
+            [
+                "1602aa629a131c58"
+            ]
+        ]
+    },
+    {
+        "id": "1602aa629a131c58",
+        "type": "function",
+        "z": "8062c96f6804a98b",
+        "name": "",
+        "func": "\n\nmsg.topic=\"INSERT INTO dht2 (temp,hum) VALUES ('\"+global.get (\"temp\")+\"','\"+global.get (\"hum\")+\"')\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 280,
+        "wires": [
+            [
+                "46b97d6792070476"
+            ]
+        ]
+    },
+    {
+        "id": "46b97d6792070476",
+        "type": "mysql",
+        "z": "8062c96f6804a98b",
+        "mydb": "5985bd1225719007",
+        "name": "",
+        "x": 640,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ca462e86c2aa4086",
+        "type": "mqtt-broker",
+        "name": "localhost",
+        "broker": "127.0.0.1",
+        "port": "1883",
+        "clientid": "hugo-SIC-44454",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "5985bd1225719007",
+        "type": "MySQLdatabase",
+        "name": "",
+        "host": "127.0.0.1",
+        "port": "3306",
+        "db": "test",
+        "tz": "",
+        "charset": "UTF8"
+    }
+]

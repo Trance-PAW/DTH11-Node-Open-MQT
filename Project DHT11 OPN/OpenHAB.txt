@@ -1,0 +1,68 @@
+Ejemplo openhab
+
+Model-> add location
+
+Name: Casa
+Label: Casa_Chihuahua
+Type: group
+category: casa
+semantic class: location
+
+ir a things
+apretar en el boton +
+instalar bindings
+buscar mqtt (abajo esta el buscador)
+instalar mqtt binding
+
+agregar un thing nuevo
+dar click en el binding mqtt
+agregar un broker mqtt
+elegir un nombre unique ID: BrokerSIC
+
+show advanced
+broker hostname: localhost
+Broker Port: 1883
+Client ID: trancepaw
+quitar user name y password
+create thing
+
+
+agregar un nuevo thing
+generic mqtt
+uniqueID: temp
+label: temperatura DHT11
+location: desktop
+
+seleccionar bridge: MQTT broker
+crear binding
+
+abrir thing generico
+poner en channels
+channel identifier:tempcanal
+label:canal de temperatura
+channel type: number value
+
+seleccionar show advanced
+MQTT State Topic: pruebaie/temp
+QoS: primer opcion
+
+Absolute Minimum:0
+Absolute Maximum:50
+Unit Of Measurement:Grados centigrados 
+
+crear y guardar
+
+crear sublocacion en model
+asegurar que sea tipo grupo - locacion
+
+después seleccionar la sublocacion del modelo y agregar add items from thing
+seleccionar thing : temperatura DHT11
+category:temperature
+semantic: sensor 
+
+activar el canal correspondiente y establecer
+category:temperature
+semantic class: measurement
+semantic property:temperature
+
+agregar al modelo
